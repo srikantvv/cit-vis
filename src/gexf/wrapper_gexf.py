@@ -5,12 +5,22 @@ import sys,pprint
 from _gexf import Gexf, GexfImport
 
 # test helloworld.gexf
-gexf = Gexf("Paul Girard","A hello world! file")
-graph=gexf.addGraph("directed","static","a hello world graph")
+class WrapperGexf:
 
-graph.addNode("0","hello")
-graph.addNode("1","World")
-graph.addEdge("0","0","1")
+    def __init__(self, ofile="../output/world_map.gexf"):
+        self.startID = 0
+        self.ofile = ofile
 
-output_file=open("../output/world_map.gexf","w")
-gexf.write(output_file)
+    def setID(self, sID):
+        self.startID = sID
+
+    def populate(self):
+        gexf = Gexf("Citation Visualizer","An academic paper visualizer")
+        graph=gexf.addGraph("directed","static","a citation world map")
+        
+        graph.addNode("0","hello")
+        graph.addNode("1","World")
+        graph.addEdge("0","0","1")
+        
+        output_file=open(self.ofile,"w")
+        gexf.write(output_file)
